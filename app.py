@@ -67,7 +67,7 @@ class Users(Resource):
         message = client.messages.create(
             body="Join Earth's mightiest heroes. Like Kevin Bacon.",
             from_="+18777804236",
-            to="+610430636134",
+            to="+61430636134",
         )
 
         print(message)
