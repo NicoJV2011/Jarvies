@@ -65,9 +65,8 @@ class Users(Resource):
         client = Client(account_sid, auth_token)
         message = client.messages.create(
         from_='whatsapp:+14155238886',
-        content_sid='HXb5b62575e6e4ff6129ad7c8efe1f983e',
+        to='whatsapp:+61430636134',
         body='Hola Nicolas',
-        to='whatsapp:+61430636134'
         )
 
 
