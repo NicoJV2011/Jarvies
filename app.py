@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv # type: ignore
 from twilio.rest import Client # type: ignore
 from twilio.rest import Client # type: ignore
+import logging
 
 
 app = Flask(__name__)
@@ -90,7 +91,7 @@ class Text(Resource):
     def post(self):
         args = sms_args.parse_args()
         message_sid = request.form['Body']
-        print(f'message::::: {message_sid}')
+        logging.info(f' data ---> {message_sid}')
         # message_status = request.form.get('MessageStatus')
         # message = SmsOutbounding(text=args['text'])
         # db.session.add(message_sid)
