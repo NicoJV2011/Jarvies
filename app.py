@@ -88,18 +88,31 @@ class Text(Resource):
         return text
     
     @marshal_with(SmsFields)
+    @marshal_with(SmsFields)
     def post(self):
-        args = sms_args.parse_args()
-        message_sid = request.form['Body']
-        # logging.info(f' data ---> {message_sid}')
-        # message_status = request.form.get('MessageStatus')
-        # message = SmsOutbounding(text=args['text'])
-        db.session.add(message_sid)
-    
-        db.session.commit()
-        message = SmsOutbounding.query.all()
-        return message, 201
+        # Capture incoming data from Twilio's request
+        try:
+            incoming_message = request.form.get('Body')  # Get the body of the message
+            if not incoming_message:
+                return {"error": "No message body received"}, 400
 
+            # Log the incoming message
+            logging.info(f"Incoming message: {incoming_message}")
+
+            # Create a new SmsOutbounding instance
+            message = SmsOutbounding(text=incoming_message)
+
+            # Add to the database
+            db.session.add(message)
+            db.session.commit()
+
+            # Fetch all messages to return as a response
+            messages = SmsOutbounding.query.all()
+            return messages, 201
+
+        except Exception as e:
+            logging.error(f"Error processing incoming message: {e}")
+            return {"error": "Internal server error"}, 500
 
 
 
