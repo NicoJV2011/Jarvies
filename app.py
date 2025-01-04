@@ -89,7 +89,7 @@ class Text(Resource):
     @marshal_with(SmsFields)
     def post(self):
         args = sms_args.parse_args()
-        message_sid = request.form.get('MessageSid')
+        message_sid = request.form['Body']
         print(f'message::::: {message_sid}')
         # message_status = request.form.get('MessageStatus')
         # message = SmsOutbounding(text=args['text'])
@@ -97,7 +97,7 @@ class Text(Resource):
     
         # db.session.commit()
         # message = SmsOutbounding.query.all()
-        # return message, 201
+        return message_sid, message_sid
 
 
 
