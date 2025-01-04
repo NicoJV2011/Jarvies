@@ -91,14 +91,14 @@ class Text(Resource):
     def post(self):
         args = sms_args.parse_args()
         message_sid = request.form['Body']
-        logging.info(f' data ---> {message_sid}')
+        # logging.info(f' data ---> {message_sid}')
         # message_status = request.form.get('MessageStatus')
         # message = SmsOutbounding(text=args['text'])
-        # db.session.add(message_sid)
+        db.session.add(message_sid)
     
-        # db.session.commit()
-        # message = SmsOutbounding.query.all()
-        return message_sid, message_sid
+        db.session.commit()
+        message = SmsOutbounding.query.all()
+        return message, 201
 
 
 
