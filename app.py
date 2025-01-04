@@ -1,4 +1,4 @@
-from flask import Flask # type: ignore
+from flask import Flask, request # type: ignore
 from flask_migrate import Migrate # type: ignore
 from flask_sqlalchemy import SQLAlchemy # type: ignore
 from flask_restful import Resource, Api, reqparse, fields, marshal_with, abort # type: ignore
@@ -89,11 +89,15 @@ class Text(Resource):
     @marshal_with(SmsFields)
     def post(self):
         args = sms_args.parse_args()
-        message = SmsOutbounding(text=args['text'])
-        db.session.add(message)
-        db.session.commit()
-        message = SmsOutbounding.query.all()
-        return message, 201
+        message_sid = request.form.get('MessageSid')
+        print(f'message::::: {message_sid}')
+        # message_status = request.form.get('MessageStatus')
+        # message = SmsOutbounding(text=args['text'])
+        # db.session.add(message_sid)
+    
+        # db.session.commit()
+        # message = SmsOutbounding.query.all()
+        # return message, 201
 
 
 
