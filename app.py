@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 api = Api(app)
 load_dotenv()
-
+app.config['SERVER_NAME'] = None  # Or explicitly set your ngrok domain
 
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -97,8 +97,8 @@ class Text(Resource):
                 return {"error": "No message body received"}, 400
 
             # Log the incoming message
-            logging.info(f"Incoming message: {incoming_message}")
-
+            # logging.info(f"Incoming message: {incoming_message}")
+            print(incoming_message)
             # Create a new SmsOutbounding instance
             message = SmsOutbounding(text=incoming_message)
 
@@ -126,6 +126,6 @@ def home():
     return '<h1>Flask Rest Api</h1>'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port='5002')
 
     
